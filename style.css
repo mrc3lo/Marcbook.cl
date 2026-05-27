@@ -1252,3 +1252,83 @@ footer{
     }
 
 }
+
+/* =========================
+   SLIDER CARD
+========================= */
+
+.slider-servicio{
+
+    position: relative;
+
+    width: 100%;
+    height: 220px;
+
+    overflow: hidden;
+
+    border-radius:
+        calc(var(--radio) - 8px);
+
+    margin-bottom: 1.5rem;
+}
+
+
+
+/* =========================
+   IMAGENES
+========================= */
+
+.slide{
+
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    opacity: 0;
+
+    transition:
+        opacity 1s ease,
+        transform 6s ease;
+
+    transform: scale(1);
+}
+
+
+
+/* =========================
+   IMAGEN ACTIVA
+========================= */
+
+.slide.active{
+
+    opacity: 1;
+
+    transform: scale(1.08);
+}
+
+
+
+/* =========================
+   CONTENIDO CARD
+========================= */
+
+.contenido-card{
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+
+/* =========================
+   HOVER PREMIUM
+========================= */
+
+.card-servicio:hover .slide.active{
+
+    transform: scale(1.12);
+}
