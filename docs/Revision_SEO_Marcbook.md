@@ -17,7 +17,7 @@ La base técnica está preparada y comprobada localmente. No se garantiza una po
 | Atención | Se publica “Atención con coordinación previa”. No se publica dirección residencial, mapa de la casa ni coordenadas de un local. |
 | Canónica | `https://www.marcbook.cl/`, coherente con Open Graph, JSON-LD y sitemap. Confirmar que sea el host principal en Vercel antes de publicar. |
 | Indexación | Metadato de producción `index, follow, max-image-preview:large`, robots.txt y sitemap.xml generados. |
-| Compartir enlaces | Open Graph y tarjetas de redes con imagen real del trabajo, descripción y URL absoluta. No se consideran por sí solos una mejora de ranking. |
+| Compartir enlaces | Open Graph y tarjetas de redes con PNG dedicado del logo oficial, descripción y URL absoluta. La foto real se mantiene como imagen de contenido en los datos estructurados. No se consideran por sí solos una mejora de ranking. |
 | Datos estructurados | Organization, WebSite, WebPage y seis Service enlazados; se generan desde la configuración y el catálogo reales. |
 | Fotografías | Copias optimizadas, dimensiones explícitas, texto alternativo, carga diferida y decodificación asíncrona. Los originales se conservan. |
 | Fuentes | Conexiones anticipadas y hoja de fuentes descubierta desde el HTML, con display=swap y fuentes de respaldo. |
@@ -82,3 +82,10 @@ La consulta de https://marcbook.cl/ y https://www.marcbook.cl/ no pudo completar
 ## Actualización de estructura para Vercel
 
 La aplicación fue trasladada a la raíz del repositorio para reemplazar el sitio HTML anterior. `vercel.json` usa framework Vite, instalación `npm ci --include=dev`, compilación `npm run build` y salida `dist`. Root Directory debe ser `.` o vacío; no debe apuntar a una carpeta intermedia. El index antiguo y sus scripts/estilos se retiran del árbol de publicación. Se conservan el SEO, los logos, las preferencias y el contenido actual.
+
+
+## Corrección de iconos y vista previa social
+
+Se añaden favicon.ico con resoluciones 16/32/48/64/96 px, favicon PNG de 96 px, icono Apple de 180 px y tarjeta de logo PNG 1200×630. Se sustituye el enlace principal al SVG incrustado por formatos raster. El HTML prerenderizado incluye og:image, secure_url, MIME image/png, dimensiones reales y texto alternativo. Los originales de la marca no se modifican.
+
+Las comprobaciones de SEO verifican las firmas PNG/ICO, las dimensiones de los archivos, sus rutas en dist y su concordancia con los metadatos. Las vistas previas almacenadas por aplicaciones externas pueden seguir mostrando información anterior hasta que vuelvan a consultar el sitio.

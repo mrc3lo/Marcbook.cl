@@ -19,8 +19,10 @@ for (const file of images) {
   js = js.replaceAll(JSON.stringify(file), JSON.stringify(data));
   html = html.replaceAll(JSON.stringify(file), JSON.stringify(data));
 }
-const icon = await readFile('public/favicon.svg');
-html = html.replace(/<link\b(?=[^>]*\brel="icon")[^>]*>/, `<link rel="icon" href="data:image/svg+xml;base64,${icon.toString('base64')}" />`);
+const icon = await readFile('public/favicon-96.png');
+const appleIcon = await readFile('public/apple-touch-icon.png');
+html = html.replace(/<link\b(?=[^>]*\brel="icon")[^>]*>/g, `<link rel="icon" type="image/png" href="data:image/png;base64,${icon.toString('base64')}" />`);
+html = html.replace(/<link\b(?=[^>]*\brel="apple-touch-icon")[^>]*>/, `<link rel="apple-touch-icon" href="data:image/png;base64,${appleIcon.toString('base64')}" />`);
 html = html.replace(/<link\b(?=[^>]*\brel="stylesheet")(?=[^>]*\bhref="\/assets\/)[^>]*>/, () => `<style>${css.replaceAll('</style', '<\\/style')}</style>`);
 html = html.replace(/<script\b(?=[^>]*\btype="module")(?=[^>]*\bsrc=)[^>]*><\/script>/, () => `<script type="module">${js.replaceAll('</script', '<\\/script')}</script>`);
 // Esta copia de revisión no debe competir con la página de producción.

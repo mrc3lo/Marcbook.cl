@@ -1,13 +1,17 @@
-import { readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { branding } from '../src/config/branding.js';
+import { readRgbaCrop, composeLogo, encodePng, encodeIco } from './lib/png.mjs';
 
-// El favicon encuadra el PNG oficial, sin redibujar la marca.
+// Derivados de compatibilidad: los PNG oficiales permanecen intactos.
 const artwork = branding.stacked;
-const [x, y, width, height] = artwork.bounds;
-const edge = Math.max(width, height) + 220;
-const left = x + width / 2 - edge / 2;
-const top = y + height / 2 - edge / 2;
-const image = await readFile(`public${artwork.src}`);
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${left} ${top} ${edge} ${edge}"><image href="data:image/png;base64,${image.toString('base64')}" width="${artwork.canvasSize}" height="${artwork.canvasSize}"/></svg>`;
-await writeFile('public/favicon.svg', svg);
-console.log('Favicon actualizado con el logo oficial.');
+const cropped = readRgbaCrop(await readFile(`public${artwork.src}`), artwork.bounds);
+const frames = [16, 32, 48, 64, 96].map(size => ({
+  size,
+  png: encodePng(composeLogo(cropped, size, size, Math.round(size * .9))),
+}));
+await writeFile('public/favicon.ico', encodeIco(frames));
+await writeFile('public/favicon-96.png', frames.find(frame => frame.size === 96).png);
+await writeFile('public/apple-touch-icon.png', encodePng(composeLogo(cropped, 180, 180, 162)));
+await mkdir('public/social', { recursive: true });
+await writeFile('public/social/marcbook-share.png', encodePng(composeLogo(cropped, 1200, 630, 600)));
+console.log('Logo oficial exportado: favicon ICO/PNG, icono Apple y tarjeta social PNG 1200×630.');

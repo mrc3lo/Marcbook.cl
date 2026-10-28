@@ -63,7 +63,35 @@ for (const asset of document.querySelectorAll('script[src],link[rel="stylesheet"
 }
 const socialImage = new URL(metadata('og:image'));
 assert.equal(socialImage.origin, new URL(canonical).origin);
-await stat(`dist${socialImage.pathname}`);
+const socialBytes = await readFile(`dist${socialImage.pathname}`);
+const pngSignature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
+assert.equal(metadata('og:image:secure_url'), socialImage.href);
+assert.equal(metadata('og:image:type'), 'image/png');
+assert.equal(metadata('twitter:image'), socialImage.href);
+assert.ok(socialBytes.subarray(0, 8).equals(pngSignature));
+assert.equal(socialBytes.readUInt32BE(16), Number(metadata('og:image:width')));
+assert.equal(socialBytes.readUInt32BE(20), Number(metadata('og:image:height')));
+assert.ok(socialBytes.length < 300_000);
+assert.equal(socialImage.pathname, '/social/marcbook-share.png');
+for (const [selector, size] of [['link[rel="icon"][type="image/png"]', 96], ['link[rel="apple-touch-icon"]', 180]]) {
+  const iconLink = document.querySelector(selector);
+  assert.ok(iconLink, selector);
+  const bytes = await readFile(`dist${iconLink.getAttribute('href')}`);
+  assert.ok(bytes.subarray(0, 8).equals(pngSignature));
+  assert.equal(bytes.readUInt32BE(16), size);
+  assert.equal(bytes.readUInt32BE(20), size);
+}
+const icoLink = document.querySelector('link[rel="icon"][type="image/x-icon"]');
+assert.ok(icoLink);
+const ico = await readFile(`dist${icoLink.getAttribute('href')}`);
+assert.equal(ico.readUInt16LE(0), 0);
+assert.equal(ico.readUInt16LE(2), 1);
+assert.equal(ico.readUInt16LE(4), 5);
+for (let index = 0; index < ico.readUInt16LE(4); index++) {
+  const entry = 6 + index * 16, length = ico.readUInt32LE(entry + 8), offset = ico.readUInt32LE(entry + 12);
+  assert.ok(offset + length <= ico.length);
+  assert.ok(ico.subarray(offset, offset + 8).equals(pngSignature));
+}
 const robots = await readFile('dist/robots.txt', 'utf8');
 assert.ok(robots.includes(`Sitemap: ${new URL('/sitemap.xml', canonical).href}`));
 assert.ok(!/Disallow:\s*\//i.test(robots));

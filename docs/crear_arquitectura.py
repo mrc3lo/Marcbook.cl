@@ -94,7 +94,9 @@ table(['Archivo / carpeta', 'Contenido'], [
 ['vite.config.js', 'Transformación automática de JSX para los módulos React.'],
 ['public/trabajos/', 'Fotografías reutilizadas de trabajos originales.'],
 ['public/logos/', 'Copias íntegras de los PNG oficiales horizontal y apilado de la carpeta original logos.'],
-['public/favicon.svg', 'Icono con la versión apilada oficial; generado por scripts/build-favicon.mjs.'],
+['public/favicon.ico y favicon-96.png', 'Iconos raster del navegador; ICO con cinco resoluciones y PNG de 96 px.'],
+['public/apple-touch-icon.png', 'Icono de 180 px para dispositivos Apple.'],
+['public/social/marcbook-share.png', 'Tarjeta de 1200×630 con el logo para Open Graph y vistas previas.'],
 ['package.json / package-lock.json', 'Dependencias, scripts y versiones resueltas.'],
 ['dist/', 'Resultado generado para hosting estático.'],
 ['make-preview.mjs / REVISAR.html', 'Generador y vista de revisión autónoma con estilos, JS y fotos integrados.'],
@@ -146,6 +148,7 @@ table(['Criterio', 'Modo noche', 'Modo día'], [
 ], [3000,3300,3300])
 sub('Identidad visual oficial')
 p('La cabecera y el pie usan LOGO-SIN FONDO-01.png, horizontal. La sección Sobre mí y el favicon usan LOGO-SIN FONDO-02.png, apilado. Los archivos se copian íntegros a public/logos. Logo.jsx encuadra el margen transparente mediante un viewBox SVG, sin redibujar ni recolorear la marca. El mismo degradado azul y cian se utiliza en ambos temas. Los tamaños se editan en styles/branding.css y las rutas y encuadres en config/branding.js.')
+p('Los iconos de pestaña se sirven como ICO y PNG reales. La tarjeta social usa el logo apilado sobre fondo oscuro en un PNG de 1200×630, con metadatos HTTPS, MIME y dimensiones. scripts/build-favicon.mjs genera los derivados mediante scripts/lib/png.mjs, sin modificar los logos originales. El SVG anterior deja de ser el icono anunciado en el HTML.')
 sub('Tipografía y adaptación')
 bullet('DM Sans para lectura e interfaz; Space Grotesk para marca y títulos. Si Google Fonts no carga, se usa sans-serif del sistema.')
 bullet('Textos descriptivos: aproximadamente 15–17 px. Campos de consulta: 16 px. Etiquetas del formulario: 15 px. Títulos de servicios: 20–22 px según pantalla.')
@@ -166,7 +169,7 @@ table(['Comando', 'Resultado'], [
 ['npm run dev', 'Inicia Vite en el equipo local.'],
 ['npm run build', 'Compila cliente y prerender; genera dist/ con contenido completo.'],
 ['npm run check:seo', 'Valida el HTML inicial, metadatos, datos estructurados, robots y sitemap.'],
-['npm run brand:favicon', 'Regenera public/favicon.svg desde el PNG oficial apilado.'],
+['npm run brand:favicon', 'Regenera iconos ICO/PNG, icono Apple y tarjeta social desde el logo oficial.'],
 ['npm run preview:file', 'Compila y regenera REVISAR.html, que puede abrirse sin servidor.'],
 ['npm run check:dom', 'Comprueba interacciones React en DOM simulado; no valida apariencia.'],
 ['npm run check:browser', 'Comprueba interacciones y capturas con Chrome cuando esté permitido.']

@@ -125,7 +125,7 @@ Las copias de `LOGO-SIN FONDO-01.png` y `LOGO-SIN FONDO-02.png`, procedentes de 
 - `src/components/ui/Logo.jsx`: muestra la imagen original dentro de un SVG con viewBox, evitando el gran margen transparente del archivo.
 - `Brand.jsx`: usa el logo horizontal en cabecera y pie; la sección Sobre mí usa el logo apilado.
 - `src/styles/branding.css`: tamaños de marca en escritorio y móviles.
-- `npm run brand:favicon`: regenera el icono del navegador desde el PNG oficial apilado. Ejecutar después `npm run preview:file` para actualizar la revisión autónoma.
+- `npm run brand:favicon`: regenera favicon ICO multirresolución, favicon PNG de 96 px, icono Apple de 180 px y tarjeta social PNG de 1200×630 desde el PNG oficial apilado. Ejecutar después `npm run preview:file` para actualizar la revisión autónoma.
 
 Se conservan los colores y proporciones originales tanto en modo día como en modo noche. No se aplican filtros de color ni se recrean las letras con tipografía.
 
@@ -152,3 +152,12 @@ Informe de implementación y controles pendientes: [docs/Revision_SEO_Marcbook.m
 `index.html`, `package.json`, `package-lock.json`, `vite.config.js`, `vercel.json`, `src/`, `public/`, `scripts/` y `docs/` están directamente en la raíz. No existe una carpeta intermedia `propuesta-react` ni se conserva el index del sitio antiguo en la publicación.
 
 Vercel debe construir el proyecto, no servir los archivos fuente como un sitio HTML sin build. La salida que contiene el sitio completo es `dist/`. Si había ajustes manuales en el panel, comprobar que coincidan con los valores de `vercel.json` y que la rama de producción sea `master`.
+
+
+## Iconos y vista previa al compartir
+
+La pestaña usa `public/favicon.ico` y `public/favicon-96.png`; iOS usa `public/apple-touch-icon.png`. Se generan como imágenes raster reales para evitar depender de un SVG que incrusta otra imagen. El archivo SVG anterior se conserva como recurso de compatibilidad de URLs antiguas, pero ya no se anuncia en el HTML.
+
+Open Graph y Twitter apuntan a `public/social/marcbook-share.png`, una tarjeta de 1200×630 con el logo oficial y fondo oscuro. Los metadatos incluyen URL HTTPS, MIME, dimensiones y texto alternativo. La foto de trabajo continúa como imagen de contenido en los datos estructurados para buscadores.
+
+`npm run brand:favicon` genera los derivados con Node.js y el logo original; `scripts/lib/png.mjs` encuadra, reescala y compone el PNG sin dependencias nativas. Después ejecutar `npm run preview:file` y `npm run check:seo`. Los iconos y la imagen social generados se versionan para que Vercel los sirva directamente.
