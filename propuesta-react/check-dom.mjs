@@ -1,0 +1,81 @@
+import { JSDOM, VirtualConsole } from 'jsdom';
+import { readFile, readdir } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const assets = await readdir('dist/assets');
+const bundle = await readFile(`dist/assets/${assets.find(x => x.endsWith('.js'))}`, 'utf8');
+const css = await readFile(`dist/assets/${assets.find(x => x.endsWith('.css'))}`, 'utf8');
+const productionHtml = await readFile('dist/index.html', 'utf8');
+const pause = () => new Promise(resolve => setTimeout(resolve, 50));
+const errors = [];
+async function mount({ saved = null, light = false, reduced = false, blocked = false, prerendered = false } = {}) {
+  const vc = new VirtualConsole();
+  vc.on('jsdomError', e => errors.push(e.message));
+  vc.on('error', (...args) => errors.push(args.map(String).join(' ')));
+  const dom = new JSDOM(prerendered ? productionHtml : '<!doctype html><html><head><meta name="theme-color" content="#090b10"></head><body><div id="root"></div></body></html>', { url: 'https://marcbook.test/', runScripts: 'outside-only', pretendToBeVisual: true, virtualConsole: vc });
+  const w = dom.window;
+  w.matchMedia = query => ({ matches: query.includes('reduced-motion') ? reduced : query.includes('color-scheme: light') ? light : false, addEventListener() {}, removeEventListener() {} });
+  w.HTMLCanvasElement.prototype.getContext = () => null;
+  if (saved) w.localStorage.setItem('marcbook-theme', saved);
+  if (blocked) Object.defineProperty(w, 'localStorage', { get() { throw new Error('Storage disabled'); } });
+  const style = w.document.createElement('style'); style.textContent = css; w.document.head.append(style);
+  const originalMain = w.document.querySelector('main');
+  w.eval(bundle); await pause(); await pause();
+  if (prerendered) assert.equal(w.document.querySelector('main'), originalMain, 'La hidratación debe conservar el HTML inicial.');
+  return dom;
+}
+const dom = await mount({ saved: 'dark' });
+const w = dom.window, d = w.document;
+assert.equal(d.documentElement.dataset.theme, 'dark');
+assert.equal(d.querySelector('.theme-toggle').getAttribute('aria-label'), 'Activar modo día');
+assert.equal(d.documentElement.dataset.motion, 'on');
+d.querySelector('.theme-toggle').click(); await pause();
+assert.equal(d.documentElement.dataset.theme, 'light');
+assert.equal(w.localStorage.getItem('marcbook-theme'), 'light');
+assert.equal(d.querySelector('meta[name="theme-color"]').content, '#f3f7fd');
+assert.equal(d.querySelector('.theme-toggle').getAttribute('aria-label'), 'Activar modo noche');
+assert.equal(d.querySelectorAll('.service-card').length, 6);
+const clickPlatform = [...d.querySelectorAll('.tabs button')].find(x => x.textContent.includes('Windows'));
+clickPlatform.click(); await pause();
+assert.match(decodeURIComponent(d.querySelector('.service-card').href), /Windows/);
+function setField(selector, value, kind) {
+  const el = d.querySelector(selector);
+  const proto = kind === 'textarea' ? w.HTMLTextAreaElement.prototype : w.HTMLSelectElement.prototype;
+  Object.getOwnPropertyDescriptor(proto, 'value').set.call(el, value);
+  el.dispatchEvent(new w.Event(kind === 'textarea' ? 'input' : 'change', { bubbles: true }));
+}
+setField('#device', 'iMac'); await pause();
+setField('#problem', 'No enciende'); await pause();
+setField('#details', 'Falló después de un corte de luz.', 'textarea'); await pause();
+const msg = new URL(d.querySelector('.contact-card .button').href).searchParams.get('text');
+assert.match(msg, /iMac/); assert.match(msg, /no enciende/); assert.match(msg, /corte de luz/);
+assert.equal(new URL(d.querySelector('.contact-card .button').href).pathname, '/56971499330');
+d.querySelector('.motion-toggle').click(); await pause();
+assert.equal(d.documentElement.dataset.motion, 'off');
+d.querySelector('.menu-toggle').click(); await pause();
+assert.equal(d.querySelector('.menu-toggle').getAttribute('aria-expanded'), 'true');
+d.querySelector('.nav a').click(); await pause();
+assert.equal(d.querySelector('.menu-toggle').getAttribute('aria-expanded'), 'false');
+for (const input of d.querySelectorAll('select,textarea')) assert.ok(d.querySelector(`label[for="${input.id}"]`));
+for (const a of d.querySelectorAll('a[target="_blank"]')) assert.ok(a.rel.includes('noopener'));
+for (const theme of ['light', 'dark']) {
+  if (d.documentElement.dataset.theme !== theme) { d.querySelector('.theme-toggle').click(); await pause(); }
+  assert.ok(parseInt(w.getComputedStyle(d.querySelector('.service-card p')).fontSize) >= 15);
+  assert.ok(parseInt(w.getComputedStyle(d.querySelector('#device')).fontSize) >= 16);
+}
+const restored = await mount({ saved: 'light', reduced: true });
+assert.equal(restored.window.document.documentElement.dataset.theme, 'light');
+assert.equal(restored.window.document.documentElement.dataset.motion, 'off');
+const system = await mount({ light: true });
+assert.equal(system.window.document.documentElement.dataset.theme, 'dark');
+const blocked = await mount({ blocked: true });
+blocked.window.document.querySelector('.theme-toggle').click(); await pause();
+assert.equal(blocked.window.document.documentElement.dataset.theme, 'light');
+const hydrated = await mount({ prerendered: true, saved: 'light', reduced: true });
+assert.equal(hydrated.window.document.documentElement.dataset.theme, 'light');
+assert.equal(hydrated.window.document.documentElement.dataset.motion, 'off');
+assert.equal(hydrated.window.document.querySelectorAll('main').length, 1);
+hydrated.window.document.querySelector('.theme-toggle').click(); await pause();
+assert.equal(hydrated.window.document.documentElement.dataset.theme, 'dark');
+for (const instance of [dom, restored, system, blocked, hydrated]) instance.window.close();
+assert.deepEqual(errors, []);
+console.log('OK: temas día/noche, persistencia, modo nocturno predeterminado, almacenamiento bloqueado, movimiento reducido, menú, servicios, mensaje de WhatsApp y tamaños de lectura e hidratación del HTML prerenderizado. DOM simulado; no verifica diseño en pantalla.');

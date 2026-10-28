@@ -1,0 +1,74 @@
+.work-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr .8fr;
+  gap: 18px;
+  padding-top: 45px;
+  padding-bottom: 100px;
+  align-items: center;
+}
+.work-heading {
+  padding-right: 26px;
+}
+.work-heading h2 {
+  font-size: 30px;
+  letter-spacing: -1px;
+}
+.work-heading p {
+  font-size: 15px;
+  line-height: 1.9;
+  color: #929aab;
+  margin: 22px 0;
+}
+.small-label {
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  color: #9ba5b5;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.small-label .status-dot {
+  width: 4px;
+  height: 4px;
+}
+.work-photo {
+  height: 310px;
+  position: relative;
+  border-radius: 7px;
+  overflow: hidden;
+  background: #151921;
+  border: 1px solid var(--line);
+}
+.work-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.65);
+  transition: transform .5s,filter .5s;
+}
+.work-photo:hover img {
+  transform: scale(1.04);
+  filter: saturate(1);
+}
+.work-photo:after {
+  content: '';
+  position: absolute;
+  inset: 40% 0 0;
+  background: linear-gradient(transparent,#080c13df);
+}
+.work-photo>div {
+  position: absolute;
+  bottom: 20px;
+  left: 19px;
+  right: 19px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+}
+.work-photo.second {
+  height: 260px;
+  margin-top: 50px;
+}

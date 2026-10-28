@@ -1,0 +1,17 @@
+.skip-link {
+  position: fixed;
+  top: -80px;
+  left: 20px;
+  background: var(--accent);
+  color: #090b10;
+  padding: 12px;
+  z-index: 100;
+}
+.skip-link:focus {
+  top: 12px;
+}
+[data-motion=off] *,[data-motion=off] *:before,[data-motion=off] *:after {
+  scroll-behavior: auto!important;
+  animation: none!important;
+  transition: none!important;
+}

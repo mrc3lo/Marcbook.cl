@@ -1,0 +1,13 @@
+{
+  "name": "marcbook-site",
+  "version": "1.0.0",
+  "private": true,
+  "engines": { "node": "24.x" },
+  "scripts": {
+    "setup": "npm --prefix propuesta-react ci --include=dev",
+    "dev": "npm --prefix propuesta-react run dev",
+    "build": "npm --prefix propuesta-react run build",
+    "check:dom": "npm --prefix propuesta-react run check:dom",
+    "check:seo": "npm --prefix propuesta-react run check:seo"
+  }
+}

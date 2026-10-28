@@ -1,0 +1,60 @@
+import { chromium } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+const root = path.resolve('dist');
+const browser = await chromium.launch({ channel: 'chrome', headless: true });
+const context = await browser.newContext();
+await context.route('http://marcbook.local/**', async route => {
+  let pathname = decodeURIComponent(new URL(route.request().url()).pathname);
+  if (pathname === '/') pathname = '/index.html';
+  const file = path.join(root, pathname);
+  const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml' };
+  try { await route.fulfill({ status: 200, contentType: types[path.extname(file)] || 'application/octet-stream', body: await readFile(file) }); }
+  catch { await route.fulfill({ status: 404, body: 'Not found' }); }
+});
+const page = await context.newPage();
+const errors = [];
+page.on('pageerror', e => errors.push(e.message));
+await page.setViewportSize({ width: 1440, height: 1050 });
+await page.goto('http://marcbook.local/');
+await page.waitForTimeout(1200);
+if (await page.locator('html').getAttribute('data-theme') === 'light') {
+  await page.getByRole('button', { name: 'Activar modo noche' }).click();
+}
+await page.getByRole('button', { name: 'Activar modo día' }).click();
+await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
+await page.screenshot({ path: 'revision-dia.png', fullPage: true });
+await page.reload();
+await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
+await page.getByRole('button', { name: 'Activar modo noche' }).click();
+await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+await page.screenshot({ path: 'revision-desktop.png', fullPage: true });
+await page.getByRole('button', { name: 'Windows / PC' }).click();
+const windowsLink = await page.locator('.service-card').first().getAttribute('href');
+if (!decodeURIComponent(windowsLink).includes('Windows')) throw Error('Service platform not reflected in WhatsApp');
+await page.selectOption('#device', 'iMac');
+await page.selectOption('#problem', 'No enciende');
+await page.fill('#details', 'Mi equipo dejó de encender ayer.');
+const link = await page.getByRole('link', { name: 'Continuar en WhatsApp' }).getAttribute('href');
+const msg = new URL(link).searchParams.get('text');
+if (!msg.includes('iMac') || !msg.includes('no enciende') || !msg.includes('dejó de encender')) throw Error('Message assembly failed');
+await page.getByRole('button', { name: 'Efectos activados' }).click();
+if (await page.locator('html').getAttribute('data-motion') !== 'off') throw Error('Motion toggle failed');
+await page.locator('details').first().locator('summary').click();
+if (!(await page.locator('details').first().getAttribute('open') !== null)) throw Error('FAQ failed');
+await page.setViewportSize({ width: 390, height: 844 });
+await page.goto('http://marcbook.local/');
+await page.getByRole('button', { name: 'Abrir menú' }).click();
+await page.getByRole('navigation').getByRole('link', { name: 'Servicios' }).click();
+if (await page.getByRole('button', { name: 'Abrir menú' }).getAttribute('aria-expanded') !== 'false') throw Error('Mobile menu failed');
+await page.evaluate(() => window.scrollTo(0, 0));
+await page.waitForTimeout(800);
+const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
+if (overflow) throw Error('Horizontal overflow on mobile');
+await page.screenshot({ path: 'revision-mobile.png', fullPage: true });
+await page.emulateMedia({ reducedMotion: 'reduce' });
+await page.reload();
+await page.getByRole('button', { name: 'Efectos desactivados' }).waitFor();
+if (errors.length) throw Error(errors.join('\n'));
+console.log('OK: desktop/mobile, service tabs, WhatsApp message, motion control, reduced motion, FAQ, mobile menu, no overflow, no runtime errors.');
+await browser.close();

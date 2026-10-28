@@ -1,0 +1,127 @@
+:root[data-theme=light] {
+  --text: #152c49;
+  --body-text: #415b78;
+  --muted: #526b87;
+  --surface: #fff;
+  --input: #f6f9fe;
+  --accent: #165fb9;
+  --line: #17487926;
+  color-scheme: light;
+  background: #f3f7fd;
+  color: var(--text);
+}
+[data-theme=light] body {
+  background: #f3f7fd;
+  color: var(--text);
+}
+[data-theme=light] .header {
+  background: #f3f7fdf5;
+}
+[data-theme=light] .nav {
+  color: #3c5574;
+}
+[data-theme=light] .nav-contact {
+  border-color: #28598d40;
+  color: #183e6a;
+}
+[data-theme=light] .gradient-text {
+  background-image: linear-gradient(105deg,#0759ad,#146cb8 45%,#4057b8);
+}
+[data-theme=light] .primary,[data-theme=light] .floating-wa,[data-theme=light] .skip-link {
+  background: #165fb9;
+  color: #fff;
+}
+[data-theme=light] .primary:hover,[data-theme=light] .floating-wa:hover {
+  background: #104d99;
+}
+[data-theme=light] .status-dot {
+  background: #165fb9;
+  box-shadow: 0 0 10px #165fb933;
+}
+[data-theme=light] .hero-notes,[data-theme=light] .soft {
+  color: #526b87;
+}
+[data-theme=light] .hero-foot,[data-theme=light] .coordinate,[data-theme=light] .coord-top span,[data-theme=light] .orbit-label,[data-theme=light] .portal-center,[data-theme=light] .portal-center span {
+  color: #425e82;
+}
+[data-theme=light] .compatibility {
+  background: #eaf1fc;
+}
+[data-theme=light] .compatibility span {
+  color: #2e5077;
+}
+[data-theme=light] .compatibility span:first-child,[data-theme=light] .compatibility .compat-end,[data-theme=light] .muted {
+  color: #526b87;
+}
+[data-theme=light] .tabs {
+  background: #e4ecf8;
+}
+[data-theme=light] .tabs button {
+  color: #44627f;
+}
+[data-theme=light] .tabs .selected {
+  background: #fff;
+  color: #124f99;
+  box-shadow: 0 2px 6px #19395812;
+}
+[data-theme=light] .service-card {
+  background: #fff;
+}
+[data-theme=light] .service-card:hover {
+  background: #edf4ff;
+}
+[data-theme=light] .card-top,[data-theme=light] .card-bottom svg {
+  color: #2466b1;
+}
+[data-theme=light] .card-top span,[data-theme=light] .card-bottom,[data-theme=light] .service-note,[data-theme=light] .small-label {
+  color: #526b87;
+}
+[data-theme=light] .work-photo>div {
+  color: #f5f8ff;
+}
+[data-theme=light] .steps article {
+  border-color: #28598d40;
+}
+[data-theme=light] .step-number {
+  color: #165fb9;
+}
+[data-theme=light] .step-number span {
+  color: #94aac7;
+}
+[data-theme=light] .chip {
+  background: linear-gradient(135deg,#e5f0ff,#fff);
+  color: #2869b3;
+  border-color: #729bd2;
+}
+[data-theme=light] .chip>span {
+  background: #f1f6ff;
+}
+[data-theme=light] .about-orbit {
+  border-color: #3b72b94d;
+}
+[data-theme=light] .about-caption,[data-theme=light] .about-art:before,[data-theme=light] .about-art:after {
+  color: #526b87;
+}
+[data-theme=light] .contact-section {
+  background: #eaf1fc;
+}
+[data-theme=light] .contact-card {
+  background: #ffffffed;
+  border-color: #17487926;
+}
+[data-theme=light] .contact-card label {
+  color: #294a70;
+}
+[data-theme=light] .contact-card select,[data-theme=light] .contact-card textarea {
+  background: #f6f9fe;
+  border-color: #17487940;
+  color: #193958;
+  color-scheme: light;
+}
+[data-theme=light] textarea::placeholder {
+  color: #61758f;
+  opacity: 1;
+}
+[data-theme=light] .contact-meta,[data-theme=light] .contact-card label span,[data-theme=light] .form-note,[data-theme=light] .footer p,[data-theme=light] .footer>span,[data-theme=light] .footer>a:not(.brand) {
+  color: #526b87;
+}

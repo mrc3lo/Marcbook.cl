@@ -1,0 +1,87 @@
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 85px;
+  border-top: 1px solid var(--line);
+  padding-top: 85px;
+  padding-bottom: 100px;
+  align-items: center;
+}
+.about-art {
+  height: 370px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse,#2465a333,transparent 65%);
+  overflow: hidden;
+}
+.chip {
+  width: 130px;
+  height: 130px;
+  border: 1px solid #a4a2de77;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background: linear-gradient(135deg,#28293f,#10141e);
+  transform: rotate(-15deg);
+  box-shadow: 0 0 70px #3975bb22;
+  position: relative;
+  z-index: 2;
+  color: #b8c8de;
+}
+.chip>span {
+  position: absolute;
+  font-family: var(--heading);
+  font-size: 16px;
+  background: #1c2332;
+  padding: 4px;
+  letter-spacing: 1px;
+}
+.about-orbit {
+  width: 330px;
+  height: 330px;
+  border: 1px solid #9ba5d533;
+  border-radius: 50%;
+  position: absolute;
+  transform: rotateX(60deg) rotate(-35deg);
+}
+.about-orbit.two {
+  transform: rotateY(60deg) rotate(35deg);
+  border-color: #b2a3ff44;
+}
+.about-art:before {
+  content: '+';
+  position: absolute;
+  left: 30px;
+  top: 40px;
+  color: #838ba6;
+}
+.about-art:after {
+  content: '+';
+  position: absolute;
+  right: 30px;
+  bottom: 65px;
+  color: #838ba6;
+}
+.about-caption {
+  position: absolute;
+  bottom: 10px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #7f8a9e;
+}
+.about-copy p {
+  font-size: 16px;
+  line-height: 1.9;
+  color: #9ba4b5;
+  max-width: 400px;
+}
+.about-copy h2 {
+  margin-bottom: 23px;
+}
+.about-copy .text-link {
+  color: var(--accent);
+  margin-top: 10px;
+}

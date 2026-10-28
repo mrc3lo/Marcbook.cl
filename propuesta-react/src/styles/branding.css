@@ -1,0 +1,31 @@
+/* Identidad oficial: mismo degradado original en modo día y noche. */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  width: 188px;
+  flex-shrink: 0;
+  line-height: 0;
+}
+.brand-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.footer .brand {
+  width: 168px;
+}
+.chip .brand-logo {
+  width: 92px;
+  transform: rotate(15deg);
+}
+@media (max-width: 760px) {
+  .header .brand {
+    width: 160px;
+  }
+}
+@media (max-width: 370px) {
+  .header .brand {
+    width: 126px;
+  }
+}

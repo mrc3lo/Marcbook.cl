@@ -1,0 +1,192 @@
+/* Lisibilidad y sistema de color. El tema se aplica también al portal canvas. */
+:root {
+  --muted: #abb8cc;
+  --text: #f0f5ff;
+  --body-text: #abb8cc;
+  --surface: #101722;
+  --input: #0b111c;
+  --accent: #8ec8ff;
+  --line: #a9c9f226;
+  color-scheme: dark;
+}
+body {
+  color: var(--text);
+  background: #090b10;
+}
+.header {
+  gap: 24px;
+}
+.nav {
+  margin-left: auto;
+  gap: 25px;
+}
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 14px;
+  color: var(--text);
+}
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.hero-description,.section-aside,.service-card p,.steps p,.work-heading p,.about-copy p,.contact-grid>div>p,details p {
+  color: var(--body-text);
+  line-height: 1.8;
+}
+.hero-notes {
+  font-size: 13px;
+  line-height: 1.7;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  color: #a5b3c8;
+}
+.hero-description .desktop {
+  display: none;
+}
+.hero-description {
+  max-width: 470px;
+}
+.hero-actions {
+  flex-wrap: wrap;
+  gap: 18px;
+}
+.hero-foot {
+  font-size: 11px;
+  letter-spacing: .6px;
+}
+.hero-foot a {
+  letter-spacing: .3px;
+}
+.hero-foot>span {
+  max-width: 32%;
+}
+.coordinate {
+  font-size: 11px;
+  letter-spacing: .5px;
+}
+.orbit-label {
+  font-size: 10px;
+  letter-spacing: .5px;
+}
+.portal-center span {
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.compatibility span:first-child,.compatibility .compat-end {
+  font-size: 11px;
+  letter-spacing: .6px;
+}
+.compatibility .wrap {
+  flex-wrap: wrap;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.service-card h3 {
+  font-size: 21px;
+  line-height: 1.35;
+  min-height: 56px;
+}
+.service-card p {
+  min-height: 109px;
+}
+.service-note {
+  font-size: 13px;
+}
+.card-bottom span {
+  font-size: 11px;
+  letter-spacing: .5px;
+}
+.work-photo>div {
+  font-size: 11px;
+  letter-spacing: .5px;
+}
+.work-heading h2 {
+  font-size: 34px;
+}
+.small-label {
+  font-size: 11px;
+  line-height: 1.7;
+  letter-spacing: 1px;
+}
+.steps h3 {
+  font-size: 21px;
+  line-height: 1.4;
+}
+.contact-card label {
+  font-size: 15px;
+}
+.contact-card select,.contact-card textarea {
+  font-size: 16px;
+  min-height: 48px;
+}
+.form-note {
+  font-size: 13px;
+}
+.footer p,.footer>a:not(.brand),.footer>span {
+  font-size: 13px;
+  line-height: 1.7;
+}
+.contact-meta {
+  font-size: 13px;
+}
+.about-caption {
+  font-size: 11px;
+}
+.tabs button {
+  min-height: 44px;
+  font-size: 14px;
+}
+.button {
+  font-size: 15px;
+  min-height: 50px;
+}
+.text-link {
+  font-size: 15px;
+}
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 1.1px;
+  line-height: 1.7;
+}
+.nav {
+  font-size: 15px;
+}
+.floating-wa {
+  font-size: 14px;
+}
+.motion-toggle {
+  font-size: 12px;
+  min-height: 32px;
+}
+.step-number {
+  font-size: 32px;
+}
+.soft {
+  color: #a9b7cd;
+}
+.card-top {
+  color: #b8cce4;
+}
+.card-top span,.card-bottom,.coordinate,.compatibility span:first-child,.compatibility .compat-end,.hero-foot,.muted {
+  color: #9aaec8;
+}
+.contact-card label span,.form-note,.about-caption,.footer>span,.footer p {
+  color: #9eb0c8;
+}
+.primary {
+  color: #0c2541;
+}
