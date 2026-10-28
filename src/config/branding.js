@@ -1,4 +1,4 @@
-// Copias íntegras de los PNG oficiales de ../logos/. Las coordenadas solo
+// Copias íntegras de los PNG oficiales de logos/. Las coordenadas solo
 // encuadran el margen transparente, sin modificar los archivos originales.
 export const branding = {
   horizontal: {

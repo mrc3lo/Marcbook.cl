@@ -1,13 +1,29 @@
 {
-  "name": "marcbook-site",
+  "name": "marcbook-cosmos",
   "version": "1.0.0",
   "private": true,
-  "engines": { "node": "24.x" },
+  "type": "module",
   "scripts": {
-    "setup": "npm --prefix propuesta-react ci --include=dev",
-    "dev": "npm --prefix propuesta-react run dev",
-    "build": "npm --prefix propuesta-react run build",
-    "check:dom": "npm --prefix propuesta-react run check:dom",
-    "check:seo": "npm --prefix propuesta-react run check:seo"
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir .prerender && node scripts/finalize-build.mjs",
+    "preview": "vite preview --host 127.0.0.1",
+    "preview:file": "npm run build && node make-preview.mjs",
+    "check:browser": "npm run build && node review.mjs",
+    "check:dom": "node check-dom.mjs",
+    "brand:favicon": "node scripts/build-favicon.mjs",
+    "check:seo": "node scripts/check-seo.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "jsdom": "^30.1.3",
+    "vite": "^7.0.0"
+  },
+  "engines": {
+    "node": "24.x"
   }
 }

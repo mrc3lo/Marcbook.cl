@@ -28,11 +28,11 @@ def table(headers, rows, widths=None):
 
 p('MARCBOOK', 'Title')
 p('Arquitectura del sitio web', 'Subtitle')
-p('Propuesta Cosmos · React + Vite · Revisión 5 · SEO y prerenderizado', 'Subtitle')
+p('Propuesta Cosmos · React + Vite · Revisión 6 · Aplicación en la raíz', 'Subtitle')
 p('28 de octubre de 2026')
 heading('1. Propósito y alcance')
 p('Sitio de presentación y contacto para el servicio técnico de Marcelo Díaz Flores en Concepción. El objetivo principal es que una persona comprenda los servicios y escriba por WhatsApp con información útil sobre su equipo.')
-p('La versión se desarrolla dentro de Marcbook.cl/propuesta-react. El sitio HTML original permanece en la carpeta superior. Esta propuesta está preparada para revisión local; no se ha publicado en GitHub ni Vercel.')
+p('La aplicación React se encuentra directamente en la raíz del repositorio mrc3lo/Marcbook.cl: index.html, package.json, src, public y scripts. El HTML antiguo se retira del árbol de trabajo y se conserva en el historial de Git y en un respaldo local externo. El push de la rama master puede iniciar el despliegue automático; su resultado debe verificarse en Vercel.')
 sub('Principios de la experiencia')
 bullet('Estética del cosmos y de los circuitos: azules, cian y profundidad visual, manteniendo el contenido por delante de los efectos.')
 bullet('Dos ambientes: modo día y modo noche, con preferencia recordada en el navegador cuando el almacenamiento está disponible.')
@@ -76,8 +76,7 @@ table(['Archivo / carpeta', 'Contenido'], [
 ['scripts/seo.mjs', 'Metadatos, Organization/Service, robots y sitemap.'],
 ['scripts/finalize-build.mjs', 'Inserta HTML completo en dist y elimina la compilación temporal.'],
 ['scripts/check-seo.mjs', 'Comprueba SEO técnico sobre la salida de producción.'],
-['propuesta-react/vercel.json', 'Build completo, salida dist y redirección de index.html cuando esta carpeta es la raíz de Vercel.'],
-['vercel.json de la raíz', 'Instala y compila propuesta-react desde la raíz del repositorio; publica propuesta-react/dist.'],
+['vercel.json', 'Configuración en la raíz: Vite, npm ci --include=dev, npm run build y salida dist.'],
 ['src/App.jsx', 'Orden de las secciones y conexión de preferencias con cabecera y portada.'],
 ['src/sections/', 'Una sección por archivo: Hero, Compatibility, Services, Work, Process, About, Faq y Contact.'],
 ['src/components/layout/', 'Header y Footer: estructura común de navegación y pie.'],
@@ -175,7 +174,7 @@ table(['Comando', 'Resultado'], [
 sub('Alcance de la verificación')
 p('La revisión de compilación y la prueba funcional de DOM se documentan en README.md. El entorno bloqueó previamente el puerto de Vite y el lanzamiento de Chrome automatizado. Por ello, la inspección visual real, el ajuste fino de espaciado en ambos temas y las pruebas de teclado, zoom y dispositivos físicos deben revisarse antes de publicar.')
 sub('Próxima publicación, pendiente de decisión')
-p('El repositorio de destino confirmado es mrc3lo/Marcbook.cl y está conectado a Vercel. La configuración de la raíz instala las dependencias de propuesta-react y publica propuesta-react/dist; también se admite usar propuesta-react como Root Directory con su configuración local. Se requiere Node.js 24. No se necesitan reglas de reescritura para rutas de aplicación. El dominio canónico es https://www.marcbook.cl/; comprobar las redirecciones reales del panel antes de dar el despliegue por verificado.')
+p('El repositorio mrc3lo/Marcbook.cl está conectado a Vercel y la rama local de publicación es master. Usar Root Directory vacío o punto, framework Vite, instalación npm ci --include=dev, build npm run build y salida dist. Se requiere Node.js 24. La aplicación está en la raíz y no usa carpetas intermedias. El dominio canónico es https://www.marcbook.cl/; comprobar el resultado del despliegue y las redirecciones del panel.')
 p('Antes de publicar: revisar modo día y noche, lectura con zoom al 200 %, menú móvil, enlaces al teléfono e Instagram, mensajes preparados y preferencias de movimiento. Comprobar también peso de imágenes, metadatos y disponibilidad del dominio. No se ha configurado analítica ni envío de datos a un servidor propio.')
 
 
@@ -217,7 +216,7 @@ p('Las dos fotos visibles usan copias optimizadas de aproximadamente 265 KB en c
 p('check:dom incluye hidratación con preferencias guardadas. check:seo comprueba el contenido sin JavaScript, los metadatos, las referencias JSON-LD, las anclas y los recursos de rastreo. Las pruebas locales no garantizan indexación ni posiciones en Google.')
 p('Antes y después de publicar deben comprobarse dominio, HTTPS, redirecciones, Search Console, ficha de negocio y velocidad móvil. La consulta del dominio no pudo completarse desde el entorno de trabajo. El detalle y las fuentes oficiales están en docs/Revision_SEO_Marcbook.md.')
 
-p('Documento elaborado a partir del código de la propuesta local · Marcbook Cosmos · Revisión 5 · SEO y prerenderizado', 'Caption')
+p('Documento elaborado a partir del código de la propuesta local · Marcbook Cosmos · Revisión 6 · Aplicación en la raíz', 'Caption')
 
 styles = '''<w:styles xmlns:w="%s"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/><w:sz w:val="23"/><w:color w:val="253C57"/><w:lang w:val="es-CL"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="150" w:line="290" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>
 <w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style>
@@ -237,7 +236,7 @@ files = {
 'word/styles.xml': styles,
 'word/footer1.xml': footer,
 'word/_rels/document.xml.rels': '''<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer" Target="footer1.xml"/></Relationships>''',
-'docProps/core.xml': '''<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:title>Arquitectura del sitio Marcbook Cosmos</dc:title><dc:creator>Marcbook</dc:creator><dc:description>Arquitectura de información, técnica y visual de la propuesta React, revisión 5, SEO y prerenderizado.</dc:description></cp:coreProperties>'''
+'docProps/core.xml': '''<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:title>Arquitectura del sitio Marcbook Cosmos</dc:title><dc:creator>Marcbook</dc:creator><dc:description>Arquitectura de información, técnica y visual de la propuesta React, revisión 6, aplicación en la raíz.</dc:description></cp:coreProperties>'''
 }
 with ZipFile(OUT, 'w', ZIP_DEFLATED) as z:
     for name, xml in files.items():

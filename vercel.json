@@ -1,10 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": null,
-  "installCommand": "npm --prefix propuesta-react ci --include=dev",
+  "framework": "vite",
   "buildCommand": "npm run build",
-  "outputDirectory": "propuesta-react/dist",
+  "outputDirectory": "dist",
   "redirects": [
-    { "source": "/index.html", "destination": "/", "permanent": true }
-  ]
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "installCommand": "npm ci --include=dev"
 }

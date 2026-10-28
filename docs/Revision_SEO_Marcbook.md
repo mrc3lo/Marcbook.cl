@@ -77,3 +77,8 @@ La consulta de https://marcbook.cl/ y https://www.marcbook.cl/ no pudo completar
 - [Google: zonas de servicio](https://support.google.com/business/answer/9157481?hl=es)
 - [Google: Core Web Vitals](https://developers.google.com/search/docs/appearance/core-web-vitals)
 - [Vercel: dominios y redirecciones](https://vercel.com/docs/domains/working-with-domains/deploying-and-redirecting)
+
+
+## Actualización de estructura para Vercel
+
+La aplicación fue trasladada a la raíz del repositorio para reemplazar el sitio HTML anterior. `vercel.json` usa framework Vite, instalación `npm ci --include=dev`, compilación `npm run build` y salida `dist`. Root Directory debe ser `.` o vacío; no debe apuntar a una carpeta intermedia. El index antiguo y sus scripts/estilos se retiran del árbol de publicación. Se conservan el SEO, los logos, las preferencias y el contenido actual.
